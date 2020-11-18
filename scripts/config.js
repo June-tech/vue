@@ -34,7 +34,7 @@ const resolve = p => {
     return path.resolve(__dirname, '../', p)
   }
 }
-
+//不同版本打包配置
 const builds = {
   // Runtime only (CommonJS). Used by bundlers e.g. Webpack & Browserify
   'web-runtime-cjs-dev': {
@@ -212,7 +212,9 @@ const builds = {
     external: Object.keys(require('../packages/weex-template-compiler/package.json').dependencies)
   }
 }
-
+/**
+ * 转化为rollup打包需要的配置
+ */
 function genConfig (name) {
   const opts = builds[name]
   const config = {

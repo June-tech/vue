@@ -161,6 +161,7 @@ export function defineReactive (
       const value = getter ? getter.call(obj) : val
       if (Dep.target) {
         dep.depend()
+        // 如果子观察目标存在，则在watcher中建立依赖
         if (childOb) {
           childOb.dep.depend()
           if (Array.isArray(value)) {
@@ -172,6 +173,7 @@ export function defineReactive (
     },
     set: function reactiveSetter (newVal) {
       const value = getter ? getter.call(obj) : val
+      // 如果NAN类型判断
       /* eslint-disable no-self-compare */
       if (newVal === value || (newVal !== newVal && value !== value)) {
         return

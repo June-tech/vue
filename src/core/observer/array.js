@@ -25,7 +25,9 @@ methodsToPatch.forEach(function (method) {
   // cache original method
   const original = arrayProto[method]
   def(arrayMethods, method, function mutator (...args) {
+    // 执行数组的原始方法
     const result = original.apply(this, args)
+    // 获取数组对象的ob方法
     const ob = this.__ob__
     let inserted
     switch (method) {
@@ -37,8 +39,9 @@ methodsToPatch.forEach(function (method) {
         inserted = args.slice(2)
         break
     }
+    // 对插入的新数据，重新遍历重新定义为响应式
     if (inserted) ob.observeArray(inserted)
-    // notify change
+    // 发送通知
     ob.dep.notify()
     return result
   })
