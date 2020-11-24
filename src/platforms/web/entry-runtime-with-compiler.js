@@ -13,12 +13,18 @@ const idToTemplate = cached((id) => {
 	const el = query(id);
 	return el && el.innerHTML;
 });
-
+// 保留vue实例的$mount方法
 const mount = Vue.prototype.$mount;
-Vue.prototype.$mount = function (el?: string | Element, hydrating?: boolean): Component {
+Vue.prototype.$mount = function (
+	el?: string | Element,
+	// 非ssr情况下为false,ssr时为true
+	hydrating?: boolean
+): Component {
+  // 获取el对象
 	el = el && query(el);
 
-	/* istanbul ignore if */
+  /* istanbul ignore if */
+  // el不能为body或者html
 	if (el === document.body || el === document.documentElement) {
 		process.env.NODE_ENV !== 'production' &&
 			warn(`Do not mount Vue to <html> or <body> - mount to normal elements instead.`);
@@ -29,7 +35,8 @@ Vue.prototype.$mount = function (el?: string | Element, hydrating?: boolean): Co
 	// resolve template/el and convert to render function
 	// 把template转换为render函数
 	if (!options.render) {
-		let template = options.template;
+    let template = options.template;
+    // 如果模板存在
 		if (template) {
 			if (typeof template === 'string') {
 				if (template.charAt(0) === '#') {
@@ -76,7 +83,8 @@ Vue.prototype.$mount = function (el?: string | Element, hydrating?: boolean): Co
 				measure(`vue ${this._name} compile`, 'compile', 'compile end');
 			}
 		}
-	}
+  }
+  // 调用mount方法,渲染dom
 	return mount.call(this, el, hydrating);
 };
 
