@@ -10,7 +10,9 @@ export function initUse (Vue: GlobalAPI) {
     }
 
     // additional parameters
+    // 把数组的第一个元素(plugin)去除
     const args = toArray(arguments, 1)
+    // 把this(vue)插入第一个元素的位置
     args.unshift(this)
     if (typeof plugin.install === 'function') {
       plugin.install.apply(plugin, args)

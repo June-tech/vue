@@ -347,6 +347,7 @@ export function stateMixin (Vue: Class<Component>) {
     cb: any,
     options?: Object
   ): Function {
+    // 获取vue实例
     const vm: Component = this
     if (isPlainObject(cb)) {
       return createWatcher(vm, expOrFn, cb, options)
