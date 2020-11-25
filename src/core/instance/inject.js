@@ -7,10 +7,7 @@ import { defineReactive, toggleObserving } from '../observer/index';
 export function initProvide (vm: Component) {
 	const provide = vm.$options.provide;
 	if (provide) {
-		vm._provided =
-
-				typeof provide === 'function' ? provide.call(vm) :
-				provide;
+		vm._provided = typeof provide === 'function' ? provide.call(vm) : provide;
 	}
 }
 
