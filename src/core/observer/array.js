@@ -6,8 +6,9 @@
 import { def } from '../util/index'
 
 const arrayProto = Array.prototype
+// 使用数组的原型创建一个新的对象
 export const arrayMethods = Object.create(arrayProto)
-
+// 修改数组元素的方法
 const methodsToPatch = [
   'push',
   'pop',
@@ -23,6 +24,7 @@ const methodsToPatch = [
  */
 methodsToPatch.forEach(function (method) {
   // cache original method
+  // 保存数组的原始方法
   const original = arrayProto[method]
   def(arrayMethods, method, function mutator (...args) {
     // 执行数组的原始方法

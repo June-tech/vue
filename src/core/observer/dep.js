@@ -28,8 +28,10 @@ export default class Dep {
     remove(this.subs, sub)
   }
 
+  // 将观察对象和watcher建立依赖
   depend () {
     if (Dep.target) {
+      // 如果target存在，把dep对象添加到watcher的依赖中
       Dep.target.addDep(this)
     }
   }
@@ -49,12 +51,15 @@ export default class Dep {
   }
 }
 
+// Dep.target 用来存放目前正在使用的watcher对象
+// 全局唯一，并且一次也只能有一个watcher被使用
 // The current target watcher being evaluated.
 // This is globally unique because only one watcher
 // can be evaluated at a time.
 Dep.target = null
 const targetStack = []
 
+// 入栈并将当前的watcher赋值给Dep.target
 export function pushTarget (target: ?Watcher) {
   targetStack.push(target)
   Dep.target = target
