@@ -153,6 +153,7 @@ function initComputed (vm: Component, computed: Object) {
 
 		if (!isSSR) {
 			// create internal watcher for the computed property.
+      // 为计算后的属性创建内部观察器
 			watchers[key] = new Watcher(vm, getter || noop, noop, computedWatcherOptions);
 		}
 
@@ -286,21 +287,27 @@ export function stateMixin (Vue: Class<Component>) {
 	Vue.prototype.$delete = del;
 
 	Vue.prototype.$watch = function (expOrFn: string | Function, cb: any, options?: Object): Function {
-		// 获取vue实例
+		// 获取vue实例this
 		const vm: Component = this;
 		if (isPlainObject(cb)) {
+      // 判断如果cb是对象执行，createWatcher
 			return createWatcher(vm, expOrFn, cb, options);
 		}
 		options = options || {};
+    // 标记为用户watcher
 		options.user = true;
+    // 创建用户watcher对象
 		const watcher = new Watcher(vm, expOrFn, cb, options);
+    // 判断immediate是否为true
 		if (options.immediate) {
+      // 立即执行一次cb回调，并且把当前值传入
 			try {
 				cb.call(vm, watcher.value);
 			} catch (error) {
 				handleError(error, vm, `callback for immediate watcher "${watcher.expression}"`);
 			}
 		}
+    // 返回取消监听的方法
 		return function unwatchFn () {
 			watcher.teardown();
 		};

@@ -190,6 +190,7 @@ export default class Watcher {
         // set new value
         const oldValue = this.value
         this.value = value
+        // 用户user
         if (this.user) {
           try {
             this.cb.call(this.vm, value, oldValue)
