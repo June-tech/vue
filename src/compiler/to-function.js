@@ -49,6 +49,7 @@ export function createCompileToFunctionFn (compile: Function): Function {
     }
 
     // check cache
+    // 读取缓存中的对象
     const key = options.delimiters
       ? String(options.delimiters) + template
       : template
@@ -57,6 +58,7 @@ export function createCompileToFunctionFn (compile: Function): Function {
     }
 
     // compile
+    // 把模板编译为对象，字符串形式的js代码
     const compiled = compile(template, options)
 
     // check compilation errors/tips
@@ -88,6 +90,7 @@ export function createCompileToFunctionFn (compile: Function): Function {
     }
 
     // turn code into functions
+    // 把字符串形式的代码转换为函数
     const res = {}
     const fnGenErrors = []
     res.render = createFunction(compiled.render, fnGenErrors)
@@ -108,7 +111,7 @@ export function createCompileToFunctionFn (compile: Function): Function {
         )
       }
     }
-
+    // 缓存并返回res
     return (cache[key] = res)
   }
 }

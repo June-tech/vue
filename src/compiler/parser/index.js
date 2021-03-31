@@ -201,6 +201,7 @@ export function parse (
     }
   }
 
+  // 对模板的解析
   parseHTML(template, {
     warn,
     expectHTML: options.expectHTML,
@@ -210,6 +211,7 @@ export function parse (
     shouldDecodeNewlinesForHref: options.shouldDecodeNewlinesForHref,
     shouldKeepComment: options.comments,
     outputSourceRange: options.outputSourceRange,
+    // 解析过程的回调
     start (tag, attrs, unary, start, end) {
       // check namespace.
       // inherit parent ns if there is one
@@ -379,6 +381,7 @@ export function parse (
         }
       }
     },
+
     comment (text: string, start, end) {
       // adding anything as a sibling to the root node is forbidden
       // comments should still be allowed, but ignored

@@ -63,6 +63,7 @@ Vue.prototype.$mount = function (
 				mark('compile');
 			}
 
+      // 把template转换为render函数
 			const { render, staticRenderFns } = compileToFunctions(
 				template,
 				{
